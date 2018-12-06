@@ -26,7 +26,7 @@ def recognize_speech_from_mic(recognizer, microphone):
     # adjust the recognizer sensitivity to ambient noise and record audio
     # from the microphone
     with microphone as source:
-        recognizer.adjust_for_ambient_noise(source, duration = 0.5)
+        recognizer.adjust_for_ambient_noise(source, duration = 0.2)
         audio = recognizer.listen(source)
 
     # set up the response object
@@ -40,7 +40,8 @@ def recognize_speech_from_mic(recognizer, microphone):
     # if a RequestError or UnknownValueError exception is caught,
     #     update the response object accordingly
     try:
-        response["transcription"] = recognizer.recognize_google(audio, language = 'el-GR')
+        response["transcription"] = recognizer.recognize_google(audio)
+        #response["transcription"] = recognizer.recognize_google(audio, language = 'el-GR')
     except sr.RequestError:
         # API was unreachable or unresponsive
         response["success"] = False
@@ -54,7 +55,8 @@ def recognize_speech_from_mic(recognizer, microphone):
 
 if __name__ == "__main__":
     # set the list of words, maxnumber of guesses, and prompt limit
-    WORDS = ["μήλο", "πορτοκάλι", "σταφύλι", "μάνγκο", "αχλάδι", "μπανάνα"]
+    WORDS = ['apple', 'banana', 'grape', 'orange', 'mango', 'lemon']
+    #WORDS = ["μήλο", "πορτοκάλι", "σταφύλι", "μάνγκο", "αχλάδι", "μπανάνα"]
     NUM_GUESSES = 3
     PROMPT_LIMIT = 5
 
@@ -88,7 +90,7 @@ if __name__ == "__main__":
         for j in range(PROMPT_LIMIT):
             print('Guess {}. Speak!'.format(i+1))
             guess = recognize_speech_from_mic(recognizer, microphone)
-            print(guess)
+            #print(guess)
             if guess["transcription"]:
                 break
             if not guess["success"]:
