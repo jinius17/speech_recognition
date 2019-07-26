@@ -88,7 +88,7 @@ if __name__ == "__main__":
         #     re-prompt the user to say their guess again. Do this up
         #     to PROMPT_LIMIT times
         for j in range(PROMPT_LIMIT):
-            print('Guess {}. Speak!'.format(i+1))
+            print('Guess {}. Try to guess...'.format(i+1))
             guess = recognize_speech_from_mic(recognizer, microphone)
             #print(guess)
             if guess["transcription"]:
